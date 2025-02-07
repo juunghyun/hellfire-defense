@@ -7,7 +7,7 @@ public class Player : MonoBehaviour
     [SerializeField] private float maxX = 4.2f;   // 최대 X값 (오른쪽)
     
     private Animator anim;
-    private bool isMousePressed = false; // 마우스가 눌린 상태인지 여부
+    
 
     void Start()
     {
@@ -30,18 +30,19 @@ public class Player : MonoBehaviour
         float speedValue = Mathf.Abs(horizontalInput) * moveSpeed; 
         anim.SetFloat("Speed", speedValue);
 
-        // 마우스 왼쪽 버튼 클릭을 감지(넌클릭 상태에서 클릭댐)
-        if (Input.GetMouseButtonDown(0) && !isMousePressed)  // 마우스 왼쪽 버튼을 클릭하면
-        {
-            anim.SetBool("Shoot", true); // Shoot 애니메이션 시작
-            isMousePressed = true; // 마우스가 눌린 상태로 변경
-        }
-
-        // 마우스 왼쪽 버튼을 떼면
-        if (Input.GetMouseButtonUp(0) && isMousePressed)
-        {
-            anim.SetBool("Shoot", false); // Shoot 애니메이션 종료
-            isMousePressed = false; // 마우스가 떼어진 상태로 변경
-        }
+        if (Input.GetMouseButtonDown(0) ) // 마우스를 처음 클릭할 때만 실행
+    {
+        anim.SetBool("Shoot", true);
+    }
+    else if (Input.GetMouseButtonUp(0)) // 마우스를 뗄 때만 실행
+    {
+        anim.SetBool("Shoot", false);
+    }
+    }
+    public void OnFootstep()
+    {
+        Debug.Log("발소리 이벤트 호출됨!");
+        // 여기에 발소리 추가 가능
+        // AudioSource.PlayClipAtPoint(footstepSound, transform.position);
     }
 }
