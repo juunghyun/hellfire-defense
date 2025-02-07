@@ -38,6 +38,9 @@ public class Player : MonoBehaviour
     {
         anim.SetBool("Shoot", false);
     }
+        Vector3 position = transform.position;
+        position.z = 13.43f; // Z값을 고정
+        transform.position = position;
     }
     public void OnFootstep()
     {
