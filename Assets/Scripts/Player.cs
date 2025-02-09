@@ -1,3 +1,4 @@
+using Mono.Cecil.Cil;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -7,11 +8,13 @@ public class Player : MonoBehaviour
     [SerializeField] private float maxX = 4.2f;   // 최대 X값 (오른쪽)
     
     private Animator anim;
+    private Quaternion originalRotation; //원래 회전값
     
 
     void Start()
     {
         anim = GetComponent<Animator>();
+        originalRotation = transform.rotation;
     }
 
     void Update()
@@ -41,7 +44,32 @@ public class Player : MonoBehaviour
         Vector3 position = transform.position;
         position.z = 13.43f; // Z값을 고정
         transform.position = position;
+
+         float speed = anim.GetFloat("Speed");  // 현재 속도 가져오기
+
+    if (Mathf.Approximately(speed, 0f)) // 정지 상태 → firing_rifle
+    {
+        transform.rotation = Quaternion.Euler(originalRotation.eulerAngles.x,
+        originalRotation.eulerAngles.y + 37.5f,
+        originalRotation.eulerAngles.z);
     }
+    else if (speed > 0) // 이동 중 → firing_rifle_run
+    {
+        transform.rotation = Quaternion.Euler(originalRotation.eulerAngles.x,
+        originalRotation.eulerAngles.y + 12.6f,
+        originalRotation.eulerAngles.z);
+    }
+    else
+    {
+        // 원래 회전으로 복구
+        transform.rotation = Quaternion.Euler(originalRotation.eulerAngles.x,
+        originalRotation.eulerAngles.y,
+        originalRotation.eulerAngles.z);
+    }
+    }
+    
+
+    //발이 지면에 닿을때마다 발생하는 이벤트트
     public void OnFootstep()
     {
         Debug.Log("발소리 이벤트 호출됨!");
