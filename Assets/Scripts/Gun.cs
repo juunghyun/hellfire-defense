@@ -27,7 +27,7 @@ public class Gun : MonoBehaviour
     void Fire()
     {
         // 총 발사 애니메이션
-        anim.SetTrigger("Shoot"); // Shoot 트리거 발동
+        // anim.SetTrigger("Shoot"); // Shoot 트리거 발동
 
         // 총구 화염 이펙트 재생
         if (muzzleFlashEffect != null)
