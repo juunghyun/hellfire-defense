@@ -38,6 +38,7 @@ public class Gun : MonoBehaviour
         }
 
         // 실제 총알 발사 로직 추가
+        //TODO : 수명 대신 오브젝트 풀링으로 변경 요망
         if (bulletPrefab != null && muzzleFlashPoint != null)
         {
             // 총알 생성
@@ -52,6 +53,7 @@ public class Gun : MonoBehaviour
             bullet.transform.rotation = Quaternion.Euler(bulletRotation);
 
             // Rigidbody를 사용하여 총알을 발사 (Rigidbody는 Prefab에 미리 추가되어 있어야 함)
+            //TODO : 수명 대신 오브젝트 풀링으로 변경 요망
             Rigidbody bulletRb = bullet.GetComponent<Rigidbody>();
             if (bulletRb != null)
             {
@@ -60,6 +62,7 @@ public class Gun : MonoBehaviour
             }
 
             // 총알 수명 설정 (3초 뒤에 사라짐)
+            //TODO : 수명 대신 오브젝트 풀링으로 변경 요망
             Destroy(bullet, 3f); // 3초 후 총알을 삭제
         }
     }
